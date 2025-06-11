@@ -12,8 +12,8 @@ const { Sider, Content } = Layout;
 
 export default function MainLayout() {
   return (
-    <Layout className="h-screen">
-      <Sider theme='light' breakpoint="lg" collapsedWidth="0">
+    <Layout  className="h-screen">
+      <Sider theme='light' breakpoint="lg" collapsedWidth="0" className='border-r border-black'>
         <div className="text-black bg-gray-200 p-4 text-xl font-bold">TaskManager Pro</div>
         <Menu
           mode="inline"
