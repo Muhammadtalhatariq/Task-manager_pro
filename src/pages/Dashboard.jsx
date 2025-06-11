@@ -1,5 +1,5 @@
-import { Card, Row, Col } from 'antd';
-import { useQuery } from '@tanstack/react-query';
+import { Card, Row, Col } from "antd";
+import { useQuery } from "@tanstack/react-query";
 
 const fetchStats = async () => {
   return {
@@ -11,10 +11,9 @@ const fetchStats = async () => {
 };
 
 export default function Dashboard() {
-  
   const { data, isLoading } = useQuery({
-    queryKey:["dashboard"],
-    queryFn: fetchStats
+    queryKey: ["dashboard"],
+    queryFn: fetchStats,
   });
 
   return (
@@ -22,7 +21,7 @@ export default function Dashboard() {
       <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
       <Row gutter={20}>
         <Col span={6}>
-           <Card loading={isLoading} title="Total Tasks">
+          <Card loading={isLoading} title="Total Tasks">
             {data?.totalTasks}
           </Card>
         </Col>
@@ -32,13 +31,13 @@ export default function Dashboard() {
           </Card>
         </Col>
         <Col span={6}>
-          <Card loading={isLoading} title="Pending Tasks">
-            {data?.pendingTasks}
+          <Card loading={isLoading} title="Completed Tasks">
+            {data?.completedTasks}
           </Card>
         </Col>
         <Col span={6}>
-          <Card loading={isLoading} title="Completed Tasks">
-            {data?.completedTasks}
+          <Card loading={isLoading} title="Pending Tasks">
+            {data?.pendingTasks}
           </Card>
         </Col>
       </Row>

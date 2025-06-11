@@ -14,9 +14,8 @@ export default function MainLayout() {
   return (
     <Layout className="h-screen">
       <Sider theme='light' breakpoint="lg" collapsedWidth="0">
-        <div className="text-black bg-white p-4 text-xl font-bold">TaskManager Pro</div>
+        <div className="text-black bg-gray-200 p-4 text-xl font-bold">TaskManager Pro</div>
         <Menu
-        
           mode="inline"
           items={[
             { key: '1', icon: <DashboardOutlined />, label: <Link to="/">Dashboard</Link> },
