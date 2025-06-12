@@ -205,6 +205,7 @@ const Tasks = () => {
         />
       </div>
       <Table
+        scroll={{ x: true }}
         columns={columns}
         dataSource={filteredTasks}
         loading={isLoading}
