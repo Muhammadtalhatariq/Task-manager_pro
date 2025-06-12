@@ -10,84 +10,161 @@ import {
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 const { Sider, Content } = Layout;
 
 export default function MainLayout() {
   const currentTheme = useSelector((state) => state.theme);
   const [collapsed, setCollapsed] = useState(false);
-  const [mobileCollapsed, setMobileCollapsed] = useState(true);
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    if (window.innerWidth < 992) {
+      setMobileMenuVisible(!mobileMenuVisible);
+    } else {
+      setCollapsed(!collapsed);
+    }
+  };
+
+  const closeMobileMenu = () => {
+    if (window.innerWidth < 992) {
+      setMobileMenuVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 992) {
+        setMobileMenuVisible(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <Layout className={`min-h-screen ${currentTheme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+    <Layout
+      className={`min-h-screen ${
+        currentTheme === "dark" ? "bg-gray-900" : "bg-white"
+      }`}
+    >
       {/* Mobile Header */}
-      <div className={`lg:hidden flex items-center justify-between p-4 ${
-        currentTheme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'
-      }`}>
+      <div
+        className={`lg:hidden flex items-center justify-between p-4 ${
+          currentTheme === "dark"
+            ? "bg-gray-800 text-white"
+            : "bg-gray-100 text-black"
+        }`}
+      >
         <div className="text-xl font-bold">TaskManager Pro</div>
         <Button
           type="text"
-          icon={mobileCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          onClick={() => setMobileCollapsed(!mobileCollapsed)}
+          icon={
+            mobileMenuVisible ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />
+          }
+          onClick={toggleMenu}
           className="text-current"
         />
       </div>
 
       <Layout hasSider className="flex flex-col lg:flex-row">
-        <Sider
-          theme={currentTheme === 'dark' ? 'dark' : 'light'}
-          breakpoint="lg"
-          collapsedWidth="0"
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-          className={`${mobileCollapsed ? 'hidden' : 'block'} lg:block`}
-          width={250}
-          trigger={null}
-        >
-          <div className={`p-4 text-xl font-bold hidden lg:block ${
-            currentTheme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'
-          }`}>
-            TaskManager Pro
-          </div>
-          <Menu 
-            theme={currentTheme === 'dark' ? 'dark' : 'light'}
-            mode="inline"
-            items={[
-              {
-                key: "1",
-                icon: <DashboardOutlined />,
-                label: <Link to="/" onClick={() => setMobileCollapsed(true)}>Dashboard</Link>,
-              },
-              {
-                key: "2",
-                icon: <UnorderedListOutlined />,
-                label: <Link to="/tasks" onClick={() => setMobileCollapsed(true)}>Tasks</Link>,
-              },
-              {
-                key: "3",
-                icon: <TeamOutlined />,
-                label: <Link to="/users" onClick={() => setMobileCollapsed(true)}>Users</Link>,
-              },
-              {
-                key: "4",
-                icon: <UserOutlined />,
-                label: <Link to="/profile" onClick={() => setMobileCollapsed(true)}>Profile</Link>,
-              },
-              {
-                key: "5",
-                icon: <SettingOutlined />,
-                label: <Link to="/settings" onClick={() => setMobileCollapsed(true)}>Settings</Link>,
-              },
-            ]}
-          />
-        </Sider>
-        
+        {/* Sidebar - visible if lg+ or mobileMenuVisible === true */}
+        {(mobileMenuVisible || window.innerWidth >= 992) && (
+          <Sider
+            theme={currentTheme === "dark" ? "dark" : "light"}
+            collapsedWidth="0"
+            collapsible
+            collapsed={collapsed}
+            onCollapse={(value) => setCollapsed(value)}
+            width={250}
+            trigger={null}
+            style={{
+              display: mobileMenuVisible || window.innerWidth >= 992 ? "block" : "none",
+              zIndex: 1000,
+              position: window.innerWidth < 992 ? "absolute" : "relative",
+              height: "100vh",
+              top: 0,
+              left: 0,
+            }}
+          >
+            <div
+              className={`p-4 text-xl font-bold hidden lg:block ${
+                currentTheme === "dark"
+                  ? "bg-gray-800 text-white"
+                  : "bg-gray-100 text-black"
+              }`}
+            >
+              TaskManager Pro
+            </div>
+            <Menu
+              theme={currentTheme === "dark" ? "dark" : "light"}
+              mode="inline"
+              defaultSelectedKeys={["1"]}
+              items={[
+                {
+                  key: "1",
+                  icon: <DashboardOutlined />,
+                  label: (
+                    <Link to="/" onClick={closeMobileMenu}>
+                      Dashboard
+                    </Link>
+                  ),
+                },
+                {
+                  key: "2",
+                  icon: <UnorderedListOutlined />,
+                  label: (
+                    <Link to="/tasks" onClick={closeMobileMenu}>
+                      Tasks
+                    </Link>
+                  ),
+                },
+                {
+                  key: "3",
+                  icon: <TeamOutlined />,
+                  label: (
+                    <Link to="/users" onClick={closeMobileMenu}>
+                      Users
+                    </Link>
+                  ),
+                },
+                {
+                  key: "4",
+                  icon: <UserOutlined />,
+                  label: (
+                    <Link to="/profile" onClick={closeMobileMenu}>
+                      Profile
+                    </Link>
+                  ),
+                },
+                {
+                  key: "5",
+                  icon: <SettingOutlined />,
+                  label: (
+                    <Link to="/settings" onClick={closeMobileMenu}>
+                      Settings
+                    </Link>
+                  ),
+                },
+              ]}
+            />
+          </Sider>
+        )}
+
+        {/* Main Content */}
         <Layout className="flex-1">
           <Content className="m-2 lg:m-4">
-            <div className={`p-4 lg:p-6 rounded ${
-              currentTheme === 'dark' ? 'bg-gray-800' : 'bg-white'
-            }`}>
+            <div
+              className={`p-4 lg:p-6 rounded ${
+                currentTheme === "dark" ? "bg-gray-800" : "bg-white"
+              }`}
+              onClick={() => {
+                if (mobileMenuVisible && window.innerWidth < 992) {
+                  setMobileMenuVisible(false);
+                }
+              }}
+            >
               <Outlet />
             </div>
           </Content>
