@@ -23,7 +23,11 @@ export default function Dashboard() {
   });
 
   return (
-    <div className={`${theme === "dark" ? "bg-gray-900 " : "bg-white"}`}>
+    <div
+      className={`${
+        theme === "dark" ? "bg-gray-900 " : "bg-white"
+      } h-screen w-full`}
+    >
       <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
       <Row gutter={20}>
         <Col span={6}>
@@ -36,6 +40,7 @@ export default function Dashboard() {
             {data?.totalUsers}
           </Card>
         </Col>
+
         <Col span={6}>
           <Card loading={isLoading} title="Completed Tasks">
             {data?.completedTasks}

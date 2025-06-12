@@ -198,13 +198,12 @@ const Tasks = () => {
           style={{ width: 150 }}
           onChange={setStatusFilter}
           options={[
-            { value: "all", label: "All Statuses" },
+            { value: "all", label: "All Status" },
             { value: "pending", label: "Pending" },
             { value: "completed", label: "Completed" },
           ]}
         />
       </div>
-
       <Table
         columns={columns}
         dataSource={filteredTasks}
@@ -212,7 +211,6 @@ const Tasks = () => {
         rowKey="id"
         pagination={{ pageSize: 5 }}
       />
-
       <Modal
         title={currentTask ? "Edit Task" : "Create Task"}
         open={isModalOpen}

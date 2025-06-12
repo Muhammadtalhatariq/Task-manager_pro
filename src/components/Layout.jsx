@@ -11,21 +11,22 @@ import { useSelector } from "react-redux";
 const { Sider, Content } = Layout;
 
 export default function MainLayout() {
-  const theme = useSelector((state) => state.theme);
+  const currentTheme = useSelector((state) => state.theme);
+
   return (
-    <Layout className="h-screen">
+    <Layout className={`min-h-screen ${currentTheme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
       <Sider
-        theme="light"
+        theme={currentTheme === 'dark' ? 'dark' : 'light'}
         breakpoint="lg"
         collapsedWidth="0"
-        className={`${
-          theme === "dark" ? "bg-gray-900 " : "bg-white"
-        }border-r border-black`}
       >
-        <div className="text-black bg-gray-200 p-4 text-xl font-bold">
+        <div className={`p-4 text-xl font-bold ${
+          currentTheme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'
+        }`}>
           TaskManager Pro
         </div>
-        <Menu
+        <Menu 
+          theme={currentTheme === 'dark' ? 'dark' : 'light'}
           mode="inline"
           items={[
             {
@@ -57,8 +58,10 @@ export default function MainLayout() {
         />
       </Sider>
       <Layout>
-        <Content className="m-4 ">
-          <div className="bg-white p-6 rounded">
+        <Content className="m-4">
+          <div className={`p-6 rounded ${
+            currentTheme === 'dark' ? 'bg-gray-800' : 'bg-white'
+          }`}>
             <Outlet />
           </div>
         </Content>
