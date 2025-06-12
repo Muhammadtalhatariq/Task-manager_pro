@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  user: { name: "User", email: "talha@gmail.com" },
+  user: { name: "Muhammad Talha", email: "talha@gmail.com" },
   isAuthenticated: true,
   blockedUsers: [],
 };
