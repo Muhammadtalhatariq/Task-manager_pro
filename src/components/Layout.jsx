@@ -11,7 +11,6 @@ import {
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-
 const { Sider, Content } = Layout;
 
 export default function MainLayout() {
@@ -26,13 +25,11 @@ export default function MainLayout() {
       setCollapsed(!collapsed);
     }
   };
-
   const closeMobileMenu = () => {
     if (window.innerWidth < 992) {
       setMobileMenuVisible(false);
     }
   };
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 992) {
@@ -49,7 +46,6 @@ export default function MainLayout() {
         currentTheme === "dark" ? "bg-gray-900" : "bg-white"
       }`}
     >
-      {/* Mobile Header */}
       <div
         className={`lg:hidden flex items-center justify-between p-4 ${
           currentTheme === "dark"
@@ -67,9 +63,7 @@ export default function MainLayout() {
           className="text-current"
         />
       </div>
-
       <Layout hasSider className="flex flex-col lg:flex-row">
-        {/* Sidebar - visible if lg+ or mobileMenuVisible === true */}
         {(mobileMenuVisible || window.innerWidth >= 992) && (
           <Sider
             theme={currentTheme === "dark" ? "dark" : "light"}
@@ -151,8 +145,6 @@ export default function MainLayout() {
             />
           </Sider>
         )}
-
-        {/* Main Content */}
         <Layout className="flex-1">
           <Content className="m-2 lg:m-4">
             <div
