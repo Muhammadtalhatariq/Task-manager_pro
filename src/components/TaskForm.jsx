@@ -71,9 +71,9 @@ export default function TaskForm({ initialValues, onSubmit, loading }) {
       </Form.Item>
 
       <Form.Item>
-        <Button 
-          type="primary" 
-          htmlType="submit" 
+        <Button
+          type="primary"
+          htmlType="submit"
           loading={loading}
           size="large"
           block

@@ -1,4 +1,4 @@
-import { Table, Switch, Button, Drawer, Card } from "antd";
+import { Table, Switch, Button, Drawer, Card ,Tag} from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleBlockUser } from "../store/authSlice";
 import { useState } from "react";
@@ -56,6 +56,7 @@ export default function Users() {
       />
 
       <Drawer
+      placement="bottom"
         title="User Details"
         open={!!selectedUser}
         onClose={() => setSelectedUser(null)}
@@ -76,9 +77,9 @@ export default function Users() {
                 <p className="font-semibold">Status:</p>
                 <p>
                   {blockedUsers.includes(selectedUser.id) ? (
-                    <Tag color="red">Blocked</Tag>
+                    <p color="red">Blocked</p>
                   ) : (
-                    <Tag color="green">Active</Tag>
+                    <p color="green">Active</p>
                   )}
                 </p>
               </div>

@@ -34,6 +34,7 @@ const Tasks = () => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks.tasks);
   const theme = useSelector((state) => state.theme);
+
   const { isLoading } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
@@ -44,9 +45,9 @@ const Tasks = () => {
 
   const createMutation = useMutation({
     mutationFn: async (newTask) => {
-      const taskWithId = { ...newTask, id: Date.now() };
-      dispatch(addTask(taskWithId));
-      return taskWithId;
+      const addNew = { ...newTask, id: Date.now() };
+      dispatch(addTask(addNew));
+      return addNew;
     },
     onSuccess: () => {
       queryClient.invalidateQueries("tasks");
