@@ -74,7 +74,10 @@ export default function MainLayout() {
             width={250}
             trigger={null}
             style={{
-              display: mobileMenuVisible || window.innerWidth >= 992 ? "block" : "none",
+              display:
+                mobileMenuVisible || window.innerWidth >= 992
+                  ? "block"
+                  : "none",
               zIndex: 1000,
               position: window.innerWidth < 992 ? "absolute" : "relative",
               height: "100vh",

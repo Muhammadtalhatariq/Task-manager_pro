@@ -30,7 +30,7 @@ export default function Dashboard() {
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
           <Card loading={isLoading} title="Total Tasks" bordered={false}>
-            <div className="text-2xl font-semibold">{data?.totalTasks || 0}</div>
+            <div className="text-2xl font-semibold ">{data?.totalTasks || 0}</div>
           </Card>
         </Col>
         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
