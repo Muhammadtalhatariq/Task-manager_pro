@@ -7,7 +7,6 @@ const initialState = {
     completed: 0,
   },
 };
-
 const tasksSlice = createSlice({
   name: "tasks",
   initialState,
@@ -15,11 +14,9 @@ const tasksSlice = createSlice({
     addTask: (state, action) => {
       const newTask = {
         ...action.payload,
-        status: action.payload.status || "pending", // Default to "pending" if status not provided
+        status: action.payload.status || "pending", 
       };
       state.tasks.push(newTask);
-
-      // Update status counts
       if (newTask.status === "pending") {
         state.statusCounts.pending += 1;
       } else if (newTask.status === "completed") {
@@ -31,13 +28,11 @@ const tasksSlice = createSlice({
         (task) => task.id === action.payload.id
       );
       if (index !== -1) {
-        // Get the previous status before update
+
         const prevStatus = state.tasks[index].status;
         const newStatus = action.payload.status;
 
         state.tasks[index] = action.payload;
-
-        // Update status counts if status changed
         if (prevStatus !== newStatus) {
           if (prevStatus === "pending") {
             state.statusCounts.pending -= 1;
@@ -58,7 +53,6 @@ const tasksSlice = createSlice({
         (task) => task.id === action.payload
       );
       if (taskToDelete) {
-        // Update status counts when deleting
         if (taskToDelete.status === "pending") {
           state.statusCounts.pending -= 1;
         } else if (taskToDelete.status === "completed") {

@@ -7,18 +7,20 @@ import {
   UserOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 const { Sider, Content } = Layout;
 
 export default function MainLayout() {
-  const theme = useSelector(state => state.theme);
+  const theme = useSelector((state) => state.theme);
   return (
     <Layout className="h-screen">
       <Sider
-      theme="light"
+        theme="light"
         breakpoint="lg"
         collapsedWidth="0"
-        className={`${theme === 'dark' ? 'bg-gray-900 ' : 'bg-white'}border-r border-black`}
+        className={`${
+          theme === "dark" ? "bg-gray-900 " : "bg-white"
+        }border-r border-black`}
       >
         <div className="text-black bg-gray-200 p-4 text-xl font-bold">
           TaskManager Pro

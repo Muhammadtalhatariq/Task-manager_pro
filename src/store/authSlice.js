@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: { name: "User", email: "talha@gmail.com" },
   isAuthenticated: true,
@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     login: (state, action) => {
@@ -19,7 +19,9 @@ export const authSlice = createSlice({
     },
     toggleBlockUser: (state, action) => {
       if (state.blockedUsers.includes(action.payload)) {
-        state.blockedUsers = state.blockedUsers.filter(id => id !== action.payload);
+        state.blockedUsers = state.blockedUsers.filter(
+          (id) => id !== action.payload
+        );
       } else {
         state.blockedUsers.push(action.payload);
       }
