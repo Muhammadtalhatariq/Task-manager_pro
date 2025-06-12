@@ -1,4 +1,4 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Card } from "antd";
 import { useSelector } from "react-redux";
 
 export default function Profile() {
@@ -10,31 +10,53 @@ export default function Profile() {
   };
 
   return (
-    <div className={`${theme === "dark" ? "bg-gray-900 " : "bg-white"}`}>
-      <h1 className="text-2xl font-bold mb-4 text-center">Profile</h1>
-      <Form initialValues={user} onFinish={onFinish} layout="vertical">
-        <Form.Item label="Name" name="name" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ required: true, type: "email" }]}
+    <div className={`${theme === "dark" ? "bg-gray-900" : "bg-white"} p-4`}>
+      <Card
+        title={<h1 className="text-2xl font-bold">Profile</h1>}
+        className="max-w-2xl mx-auto"
+      >
+        <Form 
+          initialValues={user} 
+          onFinish={onFinish} 
+          layout="vertical"
+          className="w-full"
         >
-          <Input />
-        </Form.Item>
+          <Form.Item label="Name" name="name" rules={[{ required: true }]}>
+            <Input size="large" />
+          </Form.Item>
 
-        <Form.Item label="New Password" name="password" rules={[{ min: 6 }]}>
-          <Input.Password placeholder="Leave blank to keep current" />
-        </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, type: "email" }]}
+          >
+            <Input size="large" />
+          </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Update Profile
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item 
+            label="New Password" 
+            name="password" 
+            rules={[{ min: 6 }]}
+          >
+            <Input.Password 
+              size="large" 
+              placeholder="Leave blank to keep current" 
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button 
+              type="primary" 
+              htmlType="submit"
+              size="large"
+              block
+              className="md:w-auto"
+            >
+              Update Profile
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </div>
   );
 }

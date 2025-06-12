@@ -1,4 +1,4 @@
-import { Table, Switch, Button, Drawer } from "antd";
+import { Table, Switch, Button, Drawer, Card } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleBlockUser } from "../store/authSlice";
 import { useState } from "react";
@@ -13,7 +13,12 @@ export default function Users() {
 
   const columns = [
     { title: "Name", dataIndex: "name", key: "name" },
-    { title: "Email", dataIndex: "email", key: "email" },
+    { 
+      title: "Email", 
+      dataIndex: "email", 
+      key: "email",
+      responsive: ['md']
+    },
     {
       title: "Status",
       key: "status",
@@ -28,40 +33,57 @@ export default function Users() {
       title: "Actions",
       key: "actions",
       render: (_, user) => (
-        <Button onClick={() => setSelectedUser(user)}>View Details</Button>
+        <Button 
+          onClick={() => setSelectedUser(user)}
+          size="small"
+        >
+          Details
+        </Button>
       ),
     },
   ];
 
   return (
-    <div className={`${theme === "dark" ? "bg-gray-900 " : "bg-white"}`}>
+    <div className={`${theme === "dark" ? "bg-gray-900" : "bg-white"} p-4`}>
       <h1 className="text-2xl font-bold mb-4 text-center">Users</h1>
       <Table
         columns={columns}
         dataSource={users}
         loading={isLoading}
         rowKey="id"
+        scroll={{ x: true }}
+        className="overflow-x-auto"
       />
 
       <Drawer
-        placement="bottom"
         title="User Details"
         open={!!selectedUser}
         onClose={() => setSelectedUser(null)}
+        width={window.innerWidth > 768 ? '40%' : '80%'}
       >
         {selectedUser && (
-          <div>
-            <p>
-              <strong>Name:</strong> {selectedUser.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {selectedUser.email}
-            </p>
-            <p>
-              <strong>Status:</strong>{" "}
-              {blockedUsers.includes(selectedUser.id) ? "Block" : "UnBlock"}
-            </p>
-          </div>
+          <Card>
+            <div className="space-y-4">
+              <div>
+                <p className="font-semibold">Name:</p>
+                <p>{selectedUser.name}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Email:</p>
+                <p>{selectedUser.email}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Status:</p>
+                <p>
+                  {blockedUsers.includes(selectedUser.id) ? (
+                    <Tag color="red">Blocked</Tag>
+                  ) : (
+                    <Tag color="green">Active</Tag>
+                  )}
+                </p>
+              </div>
+            </div>
+          </Card>
         )}
       </Drawer>
     </div>

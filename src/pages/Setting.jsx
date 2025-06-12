@@ -17,22 +17,24 @@ export default function Settings() {
     localStorage.setItem('theme', checked ? 'dark' : 'light');
     message.success(`Theme changed to ${checked ? 'dark' : 'light'} mode`);
   };
+
   const handleNotificationChange = (type, checked) => {
     setNotificationSettings(prev => ({
       ...prev,
       [type]: checked
     }));
-    message.success(`${type.replace(/^\w/, c => c.toUpperCase())} notifications ${checked ? 'enabled' : 'disabled'}`);
+    message.success(`${type.charAt(0).toUpperCase() + type.slice(1)} notifications ${checked ? 'enabled' : 'disabled'}`);
   };
 
   return (
-    <div className={`min-h-screen p-6 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <h1 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+    <div className={`min-h-screen p-4 md:p-6 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+      <h1 className={`text-xl md:text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
         Settings
       </h1>
+      
       <Card 
         title="Appearance" 
-        className="mb-6 shadow-sm"
+        className="mb-6 w-full max-w-3xl mx-auto"
         headStyle={{ 
           backgroundColor: theme === 'dark' ? '#1f2937' : '#f9fafb',
           color: theme === 'dark' ? 'white' : 'inherit',
@@ -43,7 +45,7 @@ export default function Settings() {
           borderTop: theme === 'dark' ? '1px solid #374151' : '1px solid #f3f4f6'
         }}
       >
-        <div className="flex justify-between items-center py-3">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-2">
           <div>
             <span className={`block ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               Dark Mode
@@ -59,9 +61,10 @@ export default function Settings() {
           />
         </div>
       </Card>
+
       <Card 
         title="Notifications"
-        className="mb-6 shadow-sm"
+        className="mb-6 w-full max-w-3xl mx-auto"
         headStyle={{ 
           backgroundColor: theme === 'dark' ? '#1f2937' : '#f9fafb',
           color: theme === 'dark' ? 'white' : 'inherit',
@@ -73,79 +76,25 @@ export default function Settings() {
         }}
       >
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between items-center py-2">
-            <div>
-              <span className={`block ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                Email Notifications
-              </span>
-              <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                Receive notifications via email
-              </span>
+          {Object.entries(notificationSettings).map(([key, value]) => (
+            <div key={key} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 p-2">
+              <div>
+                <span className={`block ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                  {key.charAt(0).toUpperCase() + key.slice(1)} Notifications
+                </span>
+                <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                  {key === 'email' ? 'Receive notifications via email' : 
+                   key === 'push' ? 'Receive push notifications' : 
+                   'Play sound for notifications'}
+                </span>
+              </div>
+              <Switch 
+                checked={value}
+                onChange={(checked) => handleNotificationChange(key, checked)}
+                className={`${value ? (theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500') : 'bg-gray-300'}`}
+              />
             </div>
-            <Switch 
-              checked={notificationSettings.email}
-              onChange={(checked) => handleNotificationChange('email', checked)}
-              className={`${notificationSettings.email ? (theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500') : 'bg-gray-300'}`}
-            />
-          </div>
-
-          <div className="flex justify-between items-center py-2">
-            <div>
-              <span className={`block ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                Push Notifications
-              </span>
-              <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                Receive push notifications
-              </span>
-            </div>
-            <Switch 
-              checked={notificationSettings.push}
-              onChange={(checked) => handleNotificationChange('push', checked)}
-              className={`${notificationSettings.push ? (theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500') : 'bg-gray-300'}`}
-            />
-          </div>
-          <div className="flex justify-between items-center py-2">
-            <div>
-              <span className={`block ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                Sound Alerts
-              </span>
-              <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                Play sound for notifications
-              </span>
-            </div>
-            <Switch 
-              checked={notificationSettings.sound}
-              onChange={(checked) => handleNotificationChange('sound', checked)}
-              className={`${notificationSettings.sound ? (theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500') : 'bg-gray-300'}`}
-            />
-          </div>
-        </div>
-      </Card>
-      <Card 
-        title="Preferences"
-        className="shadow-sm"
-        headStyle={{ 
-          backgroundColor: theme === 'dark' ? '#1f2937' : '#f9fafb',
-          color: theme === 'dark' ? 'white' : 'inherit',
-          borderBottom: theme === 'dark' ? '1px solid #374151' : '1px solid #f3f4f6'
-        }}
-        bodyStyle={{ 
-          backgroundColor: theme === 'dark' ? '#111827' : 'white',
-          borderTop: theme === 'dark' ? '1px solid #374151' : '1px solid #f3f4f6'
-        }}
-      >
-        <div className="flex justify-between items-center py-3">
-          <div>
-            <span className={`block ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-              Language
-            </span>
-            <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-              English (Default)
-            </span>
-          </div>
-          <span className={`text-sm ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
-            Change
-          </span>
+          ))}
         </div>
       </Card>
     </div>

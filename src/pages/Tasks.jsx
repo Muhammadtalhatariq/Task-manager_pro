@@ -177,8 +177,8 @@ const Tasks = () => {
   };
 
   return (
-    <div className={`${theme === "dark" ? "bg-gray-900 " : "bg-white"}`}>
-      <div className="flex justify-between items-center mb-4">
+    <div className={`${theme === "dark" ? "bg-gray-900 " : "bg-white"}p-2 md:p-4`}>
+      <div className="flex justify-between items-center mb-4 ">
         <h1 className="text-2xl font-bold">Task Management</h1>
         <Button
           type="primary"

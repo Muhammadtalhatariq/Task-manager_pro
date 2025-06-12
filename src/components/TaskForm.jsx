@@ -9,6 +9,7 @@ export default function TaskForm({ initialValues, onSubmit, loading }) {
       layout="vertical"
       initialValues={initialValues || { status: "pending" }}
       onFinish={onSubmit}
+      className="w-full"
     >
       <Form.Item
         label="Title"
@@ -30,8 +31,9 @@ export default function TaskForm({ initialValues, onSubmit, loading }) {
           },
         ]}
       >
-        <Input />
+        <Input size="large" />
       </Form.Item>
+
       <Form.Item
         label="Description"
         name="description"
@@ -54,20 +56,29 @@ export default function TaskForm({ initialValues, onSubmit, loading }) {
           },
         ]}
       >
-        <Input.TextArea rows={4} />
+        <Input.TextArea rows={4} size="large" />
       </Form.Item>
+
       <Form.Item
         label="Status"
         name="status"
         rules={[{ required: true, message: "Please select a status" }]}
       >
-        <Select>
+        <Select size="large">
           <Select.Option value="pending">Pending</Select.Option>
           <Select.Option value="completed">Completed</Select.Option>
         </Select>
       </Form.Item>
+
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading}>
+        <Button 
+          type="primary" 
+          htmlType="submit" 
+          loading={loading}
+          size="large"
+          block
+          className="md:w-auto"
+        >
           {initialValues ? "Update Task" : "Add Task"}
         </Button>
       </Form.Item>
