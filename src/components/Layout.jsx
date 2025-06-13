@@ -17,7 +17,6 @@ export default function MainLayout() {
   const currentTheme = useSelector((state) => state.theme);
   const [collapsed, setCollapsed] = useState(false);
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
-
   const toggleMenu = () => {
     if (window.innerWidth < 992) {
       setMobileMenuVisible(!mobileMenuVisible);
